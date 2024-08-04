@@ -237,7 +237,7 @@ def main():
         eval_steps=300,
         max_steps=MAX_STEPS,
         fp16=False,  # We're using bf16, so disable fp16
-        optim="adamw_torch",  # Use PyTorch's AdamW as a base
+        optim="adamw_hf",  # Using the huggingface one allows us to use custom optimizers
         lr_scheduler_type="cosine",  # Cosine learning rate decay
         load_best_model_at_end=True,
         metric_for_best_model="loss",
@@ -268,7 +268,7 @@ def main():
         train_dataset=tokenized_dataset,
         eval_dataset=tokenized_dataset.select(range(min(1000, len(tokenized_dataset)))),
         data_collator=data_collator,
-        optimizers=(optimizer, None),
+        optimizers=(optimizer, None), # This line tells it to use GrokAdamW
     )
 
     logger.info("🔥 Starting the training with GrokAdamW")
