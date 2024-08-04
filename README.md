@@ -112,7 +112,21 @@ GrokAdamW supports standard AdamW parameters (`lr`, `betas`, `eps`, `weight_deca
 4. **Monitoring Grokking Signal and Alpha Values:**
    - Use tools like TensorBoard or custom logging to track the grokking signal, alpha values, and gradient norms. This can help in understanding the optimizer's behavior and making necessary adjustments.
 
-## Contribution
+## Results of First 2 Training Runs:
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <img width="1310" alt="Graph of first training run" title="This model actually turned out very coherent" src="https://github.com/user-attachments/assets/658989a7-27c0-4d1c-bf21-fdea19a5ab48">
+  <p style="text-align: center;"><strong>First full train of 3000 steps:</strong> This model actually turned out very coherent.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <img width="1357" alt="Graph of 2nd training run with higher learning rate" title="This one is being trained longer and has a higher learning rate. Still stable however." src="https://github.com/user-attachments/assets/cc63a535-ed71-42fc-81fd-9a389e709233">
+  <p style="text-align: center;"><strong>Second ongoing round with a higher learning rate:</strong> This one is also going smoothly it seems, considering how tiny the model is.</p>
+</div>
+
+### Key Observations:
+- **Stability:** The optimizer felt very stable albeit it took a while to find the right learning rate so keep in mind it's very sensitive to that.
+- **Results:** The tiny 181M base model it trained with mainly the capybara dataset and another 300 entries for fucntion calling turned out very usable and conversational which is amazing for such a tiny model.
 
 GrokAdamW is an ongoing research project. Your feedback and contributions are welcome! Please feel free to submit issues, feature requests, or pull requests. For more details, see our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
