@@ -23,7 +23,7 @@ MAX_STEPS = 3000
 GRADIENT_ACCUMULATION_STEPS = 2
 NUM_WARMUP_STEPS = 30
 OUTPUT_DIR = "./longcustom_finetuned_results"
-CUSTOM_DATASET_PATH = "cleaned_1.jsonl"
+CUSTOM_DATASET_PATH = "dummydataset.jsonl"
 
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
