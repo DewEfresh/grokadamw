@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import logging
 import json
+import argparse
 from datasets import load_dataset, Dataset, concatenate_datasets
 from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForLanguageModeling
 from torch.cuda.amp import autocast
@@ -25,12 +26,16 @@ GRADIENT_ACCUMULATION_STEPS = 2
 NUM_WARMUP_STEPS = 30
 OUTPUT_DIR = "./longcustom_finetuned_results"
 CUSTOM_DATASET_PATH = "dummydataset.jsonl"
-HF_MODEL_NAME = "your-username/your-model-name"  # Replace with your desired Hugging Face model name
 
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
 
-# ... [rest of the code remains the same] ...
+# ... [rest of the existing code remains the same] ...
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Fine-tune a language model and upload to Hugging Face Hub")
+    parser.add_argument("--hf_model_name", type=str, required=True, help="Hugging Face model name (e.g., 'your-username/your-model-name')")
+    return parser.parse_args()
 
 def upload_to_hf(local_dir, repo_name):
     logger.info(f"🚀 Uploading model to Hugging Face Hub: {repo_name}")
@@ -56,8 +61,9 @@ def upload_to_hf(local_dir, repo_name):
         logger.error(f"❌ Failed to upload model to Hugging Face: {str(e)}")
         return False
 
-def main():
+def main(hf_model_name):
     logger.info(f"🚀 Initializing {MODEL_NAME} finetuning with GrokAdamW")
+    logger.info(f"📌 Model will be uploaded to Hugging Face as: {hf_model_name}")
     
     # ... [rest of the main function remains the same] ...
 
@@ -72,10 +78,11 @@ def main():
     logger.info("🎉 Finetuning with GrokAdamW completed!")
 
     # Upload to Hugging Face
-    if upload_to_hf(OUTPUT_DIR, HF_MODEL_NAME):
-        logger.info(f"🌟 Model successfully uploaded to Hugging Face: {HF_MODEL_NAME}")
+    if upload_to_hf(OUTPUT_DIR, hf_model_name):
+        logger.info(f"🌟 Model successfully uploaded to Hugging Face: {hf_model_name}")
     else:
         logger.warning("⚠️ Failed to upload model to Hugging Face")
 
 if __name__ == "__main__":
-    main()
+    args = parse_arguments()
+    main(args.hf_model_name)
